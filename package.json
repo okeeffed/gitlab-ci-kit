@@ -1,0 +1,57 @@
+{
+  "name": "gitlab-ci-kit",
+  "version": "0.1.0",
+  "description": "AWS CDK-style library for generating GitLab CI pipelines in TypeScript",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "generate:types": "tsx scripts/generate-types.ts",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "gitlab",
+    "gitlab-ci",
+    "ci-cd",
+    "pipeline",
+    "typescript",
+    "cdk",
+    "yaml"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "yaml": "^2.3.4",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.56.0",
+    "json-schema-to-typescript": "^15.0.4",
+    "prettier": "^3.1.0",
+    "tsup": "^8.0.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.0.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
