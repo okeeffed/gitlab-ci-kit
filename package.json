@@ -41,27 +41,19 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "change-case": "^5.4.4",
-    "package-up": "^5.0.0",
-    "snakecase-keys": "^9.0.2",
-    "yaml": "^2.3.4",
-    "zod": "^3.22.4"
+    "@tsconfig/node24": "^24.0.3",
+    "yaml": "^2.3.4"
   },
   "devDependencies": {
-    "@types/node": "^20.10.0",
-    "@typescript-eslint/eslint-plugin": "^6.13.0",
-    "@typescript-eslint/parser": "^6.13.0",
-    "eslint": "^8.56.0",
+    "@types/node": "^24.10.1",
     "json-schema-to-typescript": "^15.0.4",
     "oxfmt": "^0.14.0",
     "oxlint": "^1.29.0",
-    "prettier": "^3.1.0",
+    "package-up": "^5.0.0",
     "tsdown": "^0.16.5",
-    "tsup": "^8.0.1",
-    "tsx": "^4.7.0",
-    "type-fest": "^5.2.0",
+    "tsx": "^4.20.6",
     "typescript": "^5.3.3",
-    "vitest": "^1.0.4"
+    "vitest": "^4.0.10"
   },
   "engines": {
     "node": ">=18.0.0"

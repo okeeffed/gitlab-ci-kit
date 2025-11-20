@@ -9,7 +9,7 @@ import type {
   AllowFailure,
   RulesNeeds,
   Interruptible,
-} from "../schema/index.js";
+} from "#schema/index.ts";
 
 /**
  * Represents a rule for conditional job execution.
@@ -26,7 +26,7 @@ export class Rule implements IRule {
   needs?: RulesNeeds;
   interruptible?: Interruptible;
 
-  constructor(readonly props: IRule) {
+  constructor(props: IRule) {
     this.if = props.if;
     this.changes = props.changes;
     this.exists = props.exists;

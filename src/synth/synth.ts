@@ -1,7 +1,7 @@
 import { stringify } from "yaml";
-import type { Job } from "../constructs/Job.js";
-import type { Rule } from "../constructs/Rule.js";
-import type { Default } from "../constructs/Default.js";
+import type { Job } from "#constructs/Job.ts";
+import type { Rule } from "#constructs/Rule.ts";
+import type { Default } from "#constructs/Default.ts";
 
 /**
  * Configuration for the pipeline (top-level GitLab CI properties).
@@ -21,13 +21,13 @@ export interface PipelineConfig {
   include?: Array<
     | string
     | {
-        local?: string;
-        project?: string;
-        ref?: string;
-        file?: string | string[];
-        template?: string;
-        remote?: string;
-      }
+      local?: string;
+      project?: string;
+      ref?: string;
+      file?: string | string[];
+      template?: string;
+      remote?: string;
+    }
   >;
 }
 
