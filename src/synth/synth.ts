@@ -2,8 +2,6 @@ import { stringify } from 'yaml';
 import type { Job } from '../constructs/Job.js';
 import type { Rule } from '../constructs/Rule.js';
 import type { Default } from '../constructs/Default.js';
-import { packageUpSync } from 'package-up';
-import { writeFileSync } from 'node:fs';
 
 /**
  * Configuration for the pipeline (top-level GitLab CI properties).
@@ -63,9 +61,7 @@ function unwrapConstruct(value: any): any {
  */
 export function synth(
   jobs: Record<string, Job>,
-  config: PipelineConfig = {
-    write: true
-  }
+  config?: PipelineConfig
 ) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const pipeline: Record<string, any> = {};
@@ -96,21 +92,6 @@ export function synth(
 # DO NOT EDIT MANUALLY - Changes will be overwritten
 
 `;
-
-  const output = header + yaml
-
-  if (config.write || typeof config.write === 'undefined') {
-    const pkgPath = packageUpSync()
-
-    if (!pkgPath) {
-      console.log("WARN: package.json not found")
-      return output;
-    }
-
-    const outPath = pkgPath.replace('package.json', '.gitlab-ci.yml')
-    console.log({ outPath })
-    writeFileSync(outPath, output, 'utf-8')
-  }
 
   return header + yaml;
 }
