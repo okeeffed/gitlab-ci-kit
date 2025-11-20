@@ -1,90 +1,113 @@
 # GitLab CI Kit
 
-An AWS CDK-style library for generating GitLab CI pipelines in TypeScript with type safety and composable constructs.
+A TypeScript library for generating GitLab CI pipelines with type safety and auto-generated schema types.
 
 ## Overview
 
-GitLab CI Kit provides a programmatic way to define GitLab CI/CD pipelines using TypeScript instead of manually writing YAML. It uses an AWS CDK-inspired architecture with constructs, allowing you to build, compose, and reuse pipeline components in a type-safe manner.
+GitLab CI Kit provides a programmatic way to define GitLab CI/CD pipelines using TypeScript instead of manually writing YAML. The library automatically generates TypeScript types from GitLab's official JSON schema, ensuring your pipelines are always compatible with the latest GitLab CI features.
 
-The library automatically generates TypeScript types from GitLab's official JSON schema, ensuring your pipelines are always compatible with the latest GitLab CI features.
+Define your jobs and pipeline configuration in TypeScript, then synthesize them to valid GitLab CI YAML with automatic snake_case conversion.
 
 ## Features
 
 - 🎯 **Type-Safe Pipeline Definitions** - Full TypeScript support with auto-generated types from GitLab's official schema
-- 🧩 **Composable Constructs** - Build pipelines using reusable components (Pipeline, Stage, Job)
 - 🔄 **Auto-Generated Types** - Types are generated directly from GitLab's CI JSON schema
+- 🐍 **Automatic snake_case Conversion** - Write in camelCase, output in snake_case
 - ✅ **Built-in Validation** - Catch configuration errors before committing
-- 📦 **CDK-Style Architecture** - Familiar pattern for developers who use AWS CDK or other infrastructure-as-code tools
 - 🎨 **Clean YAML Output** - Synthesizes to readable GitLab CI YAML
+- 🧩 **Composable Jobs** - Build reusable job configurations with type safety
 
 ## Installation
 
 ```bash
-npm install gitlab-ci-kit
+npm install @okeeffed/gitlab-ci-kit
 ```
 
 ## Quick Start
 
 ```typescript
-import { Pipeline, Stage, Job } from 'gitlab-ci-kit';
+import { Job, Rule, Default, synth } from '@okeeffed/gitlab-ci-kit';
 
-// Create a pipeline
-const pipeline = new Pipeline(null, 'my-pipeline', {
+// Define jobs with camelCase properties
+const jobs = {
+  build: new Job({
+    stage: 'build',
+    image: 'node:20',
+    script: ['npm ci', 'npm run build'],
+    cache: {
+      key: '${CI_COMMIT_REF_SLUG}',
+      paths: ['node_modules/'],
+    },
+    artifacts: {
+      paths: ['dist/'],
+      expireIn: '1 week', // camelCase!
+    },
+  }),
+
+  test: new Job({
+    stage: 'test',
+    image: 'node:20',
+    script: ['npm test'],
+    beforeScript: ['npm ci'], // camelCase!
+    allowFailure: true, // camelCase!
+  }),
+
+  deploy: new Job({
+    stage: 'deploy',
+    image: 'node:20',
+    script: ['npm run deploy'],
+    rules: [
+      new Rule({ if: '$CI_COMMIT_BRANCH == "main"' }),
+      new Rule({
+        if: '$CI_PIPELINE_SOURCE == "merge_request_event"',
+        when: 'manual',
+      }),
+    ],
+    environment: {
+      name: 'production',
+      url: 'https://example.com',
+    },
+  }),
+};
+
+// Pipeline configuration with camelCase
+const config = {
   variables: {
     NODE_VERSION: '20',
   },
-  workflow: {
-    rules: [
-      { if: '$CI_PIPELINE_SOURCE == "merge_request_event"' },
-      { if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH' },
-    ],
-  },
-});
+  stages: ['build', 'test', 'deploy'],
+  default: new Default({
+    idTokens: { // camelCase!
+      GITLAB_OIDC_TOKEN: {
+        aud: 'https://gitlab.com',
+      },
+    },
+    tags: ['docker'],
+  }),
+};
 
-// Create stages
-const buildStage = new Stage(pipeline, 'build-stage', 'build');
-const testStage = new Stage(pipeline, 'test-stage', 'test');
-
-pipeline.addStage(buildStage);
-pipeline.addStage(testStage);
-
-// Add jobs
-new Job(buildStage, 'build', {
-  image: 'node:20',
-  script: ['npm ci', 'npm run build'],
-  artifacts: {
-    paths: ['dist/'],
-    expire_in: '1 week',
-  },
-});
-
-new Job(testStage, 'test:unit', {
-  image: 'node:20',
-  script: ['npm ci', 'npm test'],
-});
-
-// Generate YAML
-const yaml = pipeline.synth();
+// Generate YAML (automatically converts to snake_case)
+const yaml = synth(jobs, config);
 console.log(yaml);
 ```
 
 ## Core Concepts
 
-### Pipeline
-
-The top-level construct representing your entire GitLab CI configuration. Pipelines contain stages and global configuration.
-
-### Stage
-
-A logical grouping of jobs that run in a specific order. Jobs in the same stage run in parallel.
-
 ### Job
 
-Individual tasks that execute scripts, build artifacts, run tests, or deploy applications.
+Individual tasks that execute scripts, build artifacts, run tests, or deploy applications. Jobs are defined using the `Job` class with type-safe properties.
 
-### Synthesizer
+### Rule
 
-Converts your TypeScript construct tree into valid GitLab CI YAML.
+Workflow rules that determine when jobs run. Create rules using the `Rule` class.
+
+### Default
+
+Global default settings applied to all jobs. Define using the `Default` class.
+
+### synth()
+
+The synthesizer function that converts your TypeScript job definitions and configuration into valid GitLab CI YAML, automatically converting camelCase properties to snake_case.
 
 ## Type Generation
 
@@ -114,7 +137,7 @@ npm test
 npm run generate:types
 
 # Type checking
-npm run typecheck
+npm run type-check
 
 # Lint
 npm run lint
