@@ -38,11 +38,14 @@
     "cdk",
     "yaml"
   ],
-  "author": "",
+  "author": "Dennis O'Keeffe",
   "license": "MIT",
   "dependencies": {
     "@tsconfig/node24": "^24.0.3",
     "yaml": "^2.3.4"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
