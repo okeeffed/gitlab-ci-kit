@@ -1,6 +1,4 @@
 import { stringify } from 'yaml';
-import snakecaseKeys from 'snakecase-keys'
-import { snakeCase } from 'change-case'
 import type { Job } from '../constructs/Job.js';
 import type { Rule } from '../constructs/Rule.js';
 import type { Default } from '../constructs/Default.js';
@@ -75,13 +73,13 @@ export function synth(
   // Add top-level config
   if (config) {
     const unwrapped = unwrapConstruct(config);
-    Object.assign(pipeline, snakecaseKeys(unwrapped));
+    Object.assign(pipeline, unwrapped);
   }
 
   // Add jobs
   for (const [name, job] of Object.entries(jobs)) {
     const unwrapped = unwrapConstruct(job.props);
-    pipeline[snakeCase(name)] = snakecaseKeys(unwrapped);
+    pipeline[name] = unwrapped;
   }
 
   // Generate YAML
