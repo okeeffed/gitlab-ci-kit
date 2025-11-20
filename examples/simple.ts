@@ -12,7 +12,7 @@ const jobs = {
     },
     artifacts: {
       paths: ['dist/'],
-      expireIn: '1 week',  // camelCase!
+      expire_in: '1 week',  // camelCase!
     },
   }),
 
@@ -20,8 +20,8 @@ const jobs = {
     stage: 'test',
     image: 'node:20',
     script: ['npm test'],
-    beforeScript: ['npm ci'],  // camelCase!
-    allowFailure: true,        // camelCase!
+    before_script: ['npm ci'],  // camelCase!
+    allow_failure: true,        // camelCase!
   }),
 
   deploy: new Job({
@@ -46,7 +46,7 @@ const config = {
   },
   stages: ['build', 'test', 'deploy'],
   default: new Default({
-    idTokens: {  // camelCase!
+    id_tokens: {  // camelCase!
       GITLAB_OIDC_TOKEN: {
         aud: 'https://gitlab.com',
       },
