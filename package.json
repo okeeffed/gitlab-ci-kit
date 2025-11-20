@@ -42,7 +42,7 @@
   "license": "MIT",
   "dependencies": {
     "@tsconfig/node24": "^24.0.3",
-    "yaml": "^2.3.4"
+    "yaml": "^2.8.1"
   },
   "publishConfig": {
     "access": "public"
