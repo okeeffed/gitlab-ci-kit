@@ -1,28 +1,33 @@
 {
-  "name": "gitlab-ci-kit",
-  "version": "0.1.0",
-  "description": "AWS CDK-style library for generating GitLab CI pipelines in TypeScript",
+  "name": "@okeeffed/gitlab-ci-kit",
+  "version": "0.0.1",
+  "description": "GitLab CI pipelines in TypeScript",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "imports": {
+    "#*": "./src/*"
+  },
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
     }
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "build": "tsdown",
+    "dev": "tsdown --watch",
     "test": "vitest",
     "test:run": "vitest run",
     "generate:types": "tsx scripts/generate-types.ts",
-    "lint": "eslint src/**/*.ts",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "typecheck": "tsc --noEmit"
+    "lint": "oxlint --max-warnings=0",
+    "format": "oxfmt",
+    "type-check": "tsc --noEmit"
   },
   "keywords": [
     "gitlab",
@@ -48,7 +53,10 @@
     "@typescript-eslint/parser": "^6.13.0",
     "eslint": "^8.56.0",
     "json-schema-to-typescript": "^15.0.4",
+    "oxfmt": "^0.14.0",
+    "oxlint": "^1.29.0",
     "prettier": "^3.1.0",
+    "tsdown": "^0.16.5",
     "tsup": "^8.0.1",
     "tsx": "^4.7.0",
     "type-fest": "^5.2.0",

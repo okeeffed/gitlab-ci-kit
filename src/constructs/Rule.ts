@@ -9,7 +9,7 @@ import type {
   AllowFailure,
   RulesNeeds,
   Interruptible,
-} from '../schema/index.js';
+} from "../schema/index.js";
 
 /**
  * Represents a rule for conditional job execution.

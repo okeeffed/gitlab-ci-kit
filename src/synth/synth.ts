@@ -1,7 +1,7 @@
-import { stringify } from 'yaml';
-import type { Job } from '../constructs/Job.js';
-import type { Rule } from '../constructs/Rule.js';
-import type { Default } from '../constructs/Default.js';
+import { stringify } from "yaml";
+import type { Job } from "../constructs/Job.js";
+import type { Rule } from "../constructs/Rule.js";
+import type { Default } from "../constructs/Default.js";
 
 /**
  * Configuration for the pipeline (top-level GitLab CI properties).
@@ -12,14 +12,23 @@ export interface PipelineConfig {
   workflow?: {
     name?: string;
     autoCancel?: {
-      onNewCommit?: 'conservative' | 'interruptible' | 'none';
-      onJobFailure?: 'none' | 'all';
+      onNewCommit?: "conservative" | "interruptible" | "none";
+      onJobFailure?: "none" | "all";
     };
     rules?: Array<Rule | string | string[]>;
   };
   default?: Default;
-  include?: Array<string | { local?: string; project?: string; ref?: string; file?: string | string[]; template?: string; remote?: string }>;
-  write?: boolean;
+  include?: Array<
+    | string
+    | {
+        local?: string;
+        project?: string;
+        ref?: string;
+        file?: string | string[];
+        template?: string;
+        remote?: string;
+      }
+  >;
 }
 
 /**
@@ -40,7 +49,7 @@ function unwrapConstruct(value: any): any {
   }
 
   // Handle objects recursively
-  if (typeof value === 'object') {
+  if (typeof value === "object") {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const result: any = {};
     for (const [key, val] of Object.entries(value)) {
@@ -54,15 +63,12 @@ function unwrapConstruct(value: any): any {
 
 /**
  * Synthesizes a GitLab CI pipeline to YAML.
- * 
+ *
  * @param jobs - Object mapping job names to Job instances
  * @param config - Optional pipeline-level configuration
  * @returns YAML string
  */
-export function synth(
-  jobs: Record<string, Job>,
-  config?: PipelineConfig
-) {
+export function synth(jobs: Record<string, Job>, config?: PipelineConfig) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const pipeline: Record<string, any> = {};
 
@@ -81,9 +87,9 @@ export function synth(
   // Generate YAML
   const yaml = stringify(pipeline, {
     lineWidth: 0,
-    defaultStringType: 'PLAIN',
-    defaultKeyType: 'PLAIN',
-    nullStr: 'null',
+    defaultStringType: "PLAIN",
+    defaultKeyType: "PLAIN",
+    nullStr: "null",
   });
 
   // Add header comment

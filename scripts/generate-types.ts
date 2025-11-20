@@ -1,18 +1,18 @@
 #!/usr/bin/env tsx
 
-import { compile } from 'json-schema-to-typescript';
-import { writeFileSync, mkdirSync } from 'fs';
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
+import { compile } from "json-schema-to-typescript";
+import { writeFileSync, mkdirSync } from "fs";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const GITLAB_CI_SCHEMA_URL =
-  'https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json';
+  "https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json";
 
 async function generateTypes() {
-  console.log('Fetching GitLab CI JSON schema...');
+  console.log("Fetching GitLab CI JSON schema...");
 
   try {
     const response = await fetch(GITLAB_CI_SCHEMA_URL);
@@ -21,11 +21,11 @@ async function generateTypes() {
     }
 
     const schema = await response.json();
-    console.log('Schema fetched successfully');
+    console.log("Schema fetched successfully");
 
-    console.log('Generating TypeScript types...');
+    console.log("Generating TypeScript types...");
 
-    const ts = await compile(schema, 'GitLabCI', {
+    const ts = await compile(schema, "GitLabCI", {
       bannerComment: `/**
  * GitLab CI Configuration Types
  *
@@ -38,19 +38,19 @@ async function generateTypes() {
       style: {
         semi: true,
         singleQuote: true,
-        trailingComma: 'es5',
+        trailingComma: "es5",
       },
       additionalProperties: true,
       enableConstEnums: false,
     });
 
-    const outputDir = join(__dirname, '..', 'src', 'schema');
-    const outputPath = join(outputDir, 'gitlab-ci.types.ts');
+    const outputDir = join(__dirname, "..", "src", "schema");
+    const outputPath = join(outputDir, "gitlab-ci.types.ts");
 
     // Post-process to fix index signature conflicts
     const fixedTs = ts.replace(
       /(\n  \[k: string\]: Job;\n})/,
-      '\n  [k: string]: Job | string | undefined | object;\n}'
+      "\n  [k: string]: Job | string | undefined | object;\n}",
     );
 
     mkdirSync(outputDir, { recursive: true });
@@ -59,11 +59,11 @@ async function generateTypes() {
     console.log(`✓ Types generated successfully: ${outputPath}`);
 
     // Also save the raw schema for reference
-    const schemaPath = join(outputDir, 'ci.json');
+    const schemaPath = join(outputDir, "ci.json");
     writeFileSync(schemaPath, JSON.stringify(schema, null, 2));
     console.log(`✓ Schema saved: ${schemaPath}`);
   } catch (error) {
-    console.error('Error generating types:', error);
+    console.error("Error generating types:", error);
     process.exit(1);
   }
 }
