@@ -5,7 +5,7 @@
  * DO NOT EDIT MANUALLY - regenerate using: npm run generate:types
  *
  * Schema source: https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json
- * Generated: 2025-11-03T00:05:57.040Z
+ * Generated: 2025-11-19T21:02:28.246Z
  */
 
 export type Services = (
@@ -38,10 +38,7 @@ export type Services = (
       pull_policy?:
         | ('always' | 'never' | 'if-not-present')
         | ['always' | 'never' | 'if-not-present', ...('always' | 'never' | 'if-not-present')[]];
-      /**
-       * @minItems 1
-       */
-      command?: [string, ...string[]];
+      command?: string | [string | string[], ...(string | string[])[]];
       alias?: string;
       variables?: JobVariables;
     }
@@ -91,6 +88,7 @@ export type Artifacts = {
        * Path to the coverage report file that should be parsed.
        */
       path?: string;
+      [k: string]: unknown;
     } | null;
     /**
      * Path to file or list of files with code quality report(s) (such as Code Climate).
@@ -196,6 +194,7 @@ export type Artifacts1 = {
        * Path to the coverage report file that should be parsed.
        */
       path?: string;
+      [k: string]: unknown;
     } | null;
     /**
      * Path to file or list of files with code quality report(s) (such as Code Climate).
@@ -349,10 +348,7 @@ export type Services1 = (
       pull_policy?:
         | ('always' | 'never' | 'if-not-present')
         | ['always' | 'never' | 'if-not-present', ...('always' | 'never' | 'if-not-present')[]];
-      /**
-       * @minItems 1
-       */
-      command?: [string, ...string[]];
+      command?: string | [string | string[], ...(string | string[])[]];
       alias?: string;
       variables?: JobVariables;
     }
@@ -477,6 +473,7 @@ export type JobTemplate = {
   cache?: Cache;
   id_tokens?: IdTokens;
   identity?: Identity;
+  inputs?: JobInputs;
   secrets?: Secrets;
   script?: string | [string | string[], ...(string | string[])[]];
   run?: Steps;
@@ -611,6 +608,7 @@ export type JobTemplate = {
              * Indicates whether the managed resources are enabled for this environment.
              */
             enabled?: boolean;
+            [k: string]: unknown;
           };
           /**
            * Used to configure the dashboard for this environment.
@@ -624,7 +622,9 @@ export type JobTemplate = {
              * The Flux resource path to associate with this environment. This must be the full resource path. For example, 'helm.toolkit.fluxcd.io/v2/namespaces/gitlab-agent/helmreleases/gitlab-agent'.
              */
             flux_resource_path?: string;
+            [k: string]: unknown;
           };
+          [k: string]: unknown;
         };
         /**
          * Explicitly specifies the tier of the deployment environment if non-standard environment name is used.
@@ -1259,11 +1259,13 @@ export type Parallel =
 export type JobTemplate1 =
   | {
       when: 'delayed';
+      [k: string]: unknown;
     }
   | {
       when?: {
         [k: string]: unknown;
       };
+      [k: string]: unknown;
     };
 export type WorkflowName = string;
 export type Job = JobTemplate;
@@ -1271,7 +1273,7 @@ export type Job = JobTemplate;
 export interface HttpsGitlabComGitlabCiYml {
   $schema?: string;
   spec?: {
-    inputs?: InputParameters;
+    inputs?: ConfigInputs;
   };
   image?:
     | string
@@ -1337,18 +1339,40 @@ export interface HttpsGitlabComGitlabCiYml {
   workflow?: {
     name?: WorkflowName;
     auto_cancel?: WorkflowAutoCancel;
-    rules?: ({} | [string, ...string[]])[];
+    rules?: (
+      | {
+          [k: string]: unknown;
+        }
+      | [string, ...string[]]
+    )[];
+    [k: string]: unknown;
   };
-  [k: string]: Job;
+  [k: string]: Job | string | undefined | object;
 }
-export interface InputParameters {
+export interface ConfigInputs {
   /**
-   * This interface was referenced by `InputParameters`'s JSON-Schema definition
+   * This interface was referenced by `ConfigInputs`'s JSON-Schema definition
    * via the `patternProperty` ".*".
    */
-  [k: string]: {
+  [k: string]:
+    | (BaseInput & {
+        rules?: {
+          [k: string]: unknown;
+        }[];
+        [k: string]: unknown;
+      } & {
+        [k: string]: unknown;
+      })
+    | null;
+}
+export interface BaseInput {
+  type?: 'array' | 'boolean' | 'number' | 'string';
+  description?: string;
+  options?: (string | number | boolean)[];
+  regex?: string;
+  default?: {
     [k: string]: unknown;
-  } | null;
+  };
 }
 export interface JobVariables {
   /**
@@ -1397,6 +1421,7 @@ export interface CacheItem {
          */
         files_commits?: [string] | [string, string];
         prefix?: string;
+        [k: string]: unknown;
       };
   paths?: string[];
   policy?: string;
@@ -1413,6 +1438,7 @@ export interface CacheItem {
     | [string, string, string]
     | [string, string, string, string]
     | [string, string, string, string, string];
+  [k: string]: unknown;
 }
 export interface Hooks {
   pre_get_sources_script?: string | (string | string[])[];
@@ -1475,6 +1501,15 @@ export interface JobVariables1 {
         expand?: boolean;
       };
 }
+export interface JobInputs {
+  /**
+   * This interface was referenced by `JobInputs`'s JSON-Schema definition
+   * via the `patternProperty` ".*".
+   */
+  [k: string]: BaseInput & {
+    [k: string]: unknown;
+  };
+}
 export interface Secrets {
   /**
    * This interface was referenced by `Secrets`'s JSON-Schema definition
@@ -1496,7 +1531,15 @@ export interface StepNamedValues {
    * This interface was referenced by `StepNamedValues`'s JSON-Schema definition
    * via the `patternProperty` "^[a-zA-Z_][a-zA-Z0-9_]*$".
    */
-  [k: string]: string | number | boolean | null | unknown[] | {};
+  [k: string]:
+    | string
+    | number
+    | boolean
+    | null
+    | unknown[]
+    | {
+        [k: string]: unknown;
+      };
 }
 /**
  * GitReference is a reference to a step in a Git repository.

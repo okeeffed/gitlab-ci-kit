@@ -40,15 +40,21 @@ async function generateTypes() {
         singleQuote: true,
         trailingComma: 'es5',
       },
-      additionalProperties: false,
+      additionalProperties: true,
       enableConstEnums: false,
     });
 
     const outputDir = join(__dirname, '..', 'src', 'schema');
     const outputPath = join(outputDir, 'gitlab-ci.types.ts');
 
+    // Post-process to fix index signature conflicts
+    const fixedTs = ts.replace(
+      /(\n  \[k: string\]: Job;\n})/,
+      '\n  [k: string]: Job | string | undefined | object;\n}'
+    );
+
     mkdirSync(outputDir, { recursive: true });
-    writeFileSync(outputPath, ts);
+    writeFileSync(outputPath, fixedTs);
 
     console.log(`✓ Types generated successfully: ${outputPath}`);
 
