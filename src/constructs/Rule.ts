@@ -10,6 +10,19 @@ export class Rule {
   constructor(props: IRule) {
     Object.assign(this, props)
   }
+
+  /**
+   * Return immutable rule that is required
+   * to be triggered manually. 
+   *
+   * @note Does not mutate the original instance.
+   */
+  manual(): Rule {
+    return {
+      ...this,
+      when: 'manual'
+    }
+  }
 }
 
 export interface Rule extends IRule { }
