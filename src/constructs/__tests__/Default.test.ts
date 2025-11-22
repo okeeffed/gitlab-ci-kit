@@ -7,7 +7,7 @@ describe('Default', () => {
       image: 'node:20'
     });
 
-    expect(defaultConfig.props).toEqual({
+    expect(defaultConfig).toEqual({
       image: 'node:20'
     });
   });
@@ -17,7 +17,7 @@ describe('Default', () => {
       before_script: ['npm install']
     });
 
-    expect(defaultConfig.props.before_script).toEqual(['npm install']);
+    expect(defaultConfig.before_script).toEqual(['npm install']);
   });
 
   it('should create a default with after_script', () => {
@@ -25,7 +25,7 @@ describe('Default', () => {
       after_script: ['npm run cleanup']
     });
 
-    expect(defaultConfig.props.after_script).toEqual(['npm run cleanup']);
+    expect(defaultConfig.after_script).toEqual(['npm run cleanup']);
   });
 
   it('should create a default with tags', () => {
@@ -33,7 +33,7 @@ describe('Default', () => {
       tags: ['docker', 'linux']
     });
 
-    expect(defaultConfig.props.tags).toEqual(['docker', 'linux']);
+    expect(defaultConfig.tags).toEqual(['docker', 'linux']);
   });
 
   it('should create a default with retry configuration', () => {
@@ -41,7 +41,7 @@ describe('Default', () => {
       retry: 2
     });
 
-    expect(defaultConfig.props.retry).toBe(2);
+    expect(defaultConfig.retry).toBe(2);
   });
 
   it('should create a default with retry as object', () => {
@@ -52,7 +52,7 @@ describe('Default', () => {
       }
     });
 
-    expect(defaultConfig.props.retry).toEqual({
+    expect(defaultConfig.retry).toEqual({
       max: 2,
       when: ['script_failure']
     });
@@ -63,7 +63,7 @@ describe('Default', () => {
       timeout: '1h'
     });
 
-    expect(defaultConfig.props.timeout).toBe('1h');
+    expect(defaultConfig.timeout).toBe('1h');
   });
 
   it('should create a default with interruptible', () => {
@@ -71,7 +71,7 @@ describe('Default', () => {
       interruptible: true
     });
 
-    expect(defaultConfig.props.interruptible).toBe(true);
+    expect(defaultConfig.interruptible).toBe(true);
   });
 
   it('should create a default with multiple properties', () => {
@@ -83,7 +83,7 @@ describe('Default', () => {
       retry: 2
     });
 
-    expect(defaultConfig.props).toEqual({
+    expect(defaultConfig).toEqual({
       image: 'node:20',
       before_script: ['npm install'],
       after_script: ['npm run cleanup'],
@@ -92,12 +92,12 @@ describe('Default', () => {
     });
   });
 
-  it('should store props as readonly', () => {
+  it('should store as readonly', () => {
     const defaultConfig = new Default({
       image: 'node:20'
     });
 
-    expect(defaultConfig.props).toBeDefined();
-    expect(defaultConfig.props.image).toBe('node:20');
+    expect(defaultConfig).toBeDefined();
+    expect(defaultConfig.image).toBe('node:20');
   });
 });

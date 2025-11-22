@@ -7,7 +7,7 @@ describe('Job', () => {
       script: ['npm test']
     });
 
-    expect(job.props).toEqual({
+    expect(job).toEqual({
       script: ['npm test']
     });
   });
@@ -18,7 +18,7 @@ describe('Job', () => {
       script: ['npm test']
     });
 
-    expect(job.props.image).toBe('node:20');
+    expect(job.image).toBe('node:20');
   });
 
   it('should create a job with stage', () => {
@@ -27,7 +27,7 @@ describe('Job', () => {
       script: ['npm test']
     });
 
-    expect(job.props.stage).toBe('test');
+    expect(job.stage).toBe('test');
   });
 
   it('should create a job with before_script', () => {
@@ -36,7 +36,7 @@ describe('Job', () => {
       script: ['npm test']
     });
 
-    expect(job.props.before_script).toEqual(['npm install']);
+    expect(job.before_script).toEqual(['npm install']);
   });
 
   it('should create a job with after_script', () => {
@@ -45,7 +45,7 @@ describe('Job', () => {
       after_script: ['npm run cleanup']
     });
 
-    expect(job.props.after_script).toEqual(['npm run cleanup']);
+    expect(job.after_script).toEqual(['npm run cleanup']);
   });
 
   it('should create a job with variables', () => {
@@ -57,7 +57,7 @@ describe('Job', () => {
       }
     });
 
-    expect(job.props.variables).toEqual({
+    expect(job.variables).toEqual({
       NODE_ENV: 'test',
       DEBUG: 'true'
     });
@@ -71,7 +71,7 @@ describe('Job', () => {
       ]
     });
 
-    expect(job.props.rules).toEqual([
+    expect(job.rules).toEqual([
       { if: '$CI_COMMIT_BRANCH == "main"' }
     ]);
   });
@@ -82,7 +82,7 @@ describe('Job', () => {
       only: ['main', 'develop']
     });
 
-    expect(job.props.only).toEqual(['main', 'develop']);
+    expect(job.only).toEqual(['main', 'develop']);
   });
 
   it('should create a job with except', () => {
@@ -91,7 +91,7 @@ describe('Job', () => {
       except: ['tags']
     });
 
-    expect(job.props.except).toEqual(['tags']);
+    expect(job.except).toEqual(['tags']);
   });
 
   it('should create a job with tags', () => {
@@ -100,7 +100,7 @@ describe('Job', () => {
       tags: ['docker', 'linux']
     });
 
-    expect(job.props.tags).toEqual(['docker', 'linux']);
+    expect(job.tags).toEqual(['docker', 'linux']);
   });
 
   it('should create a job with needs', () => {
@@ -109,7 +109,7 @@ describe('Job', () => {
       needs: ['build']
     });
 
-    expect(job.props.needs).toEqual(['build']);
+    expect(job.needs).toEqual(['build']);
   });
 
   it('should create a job with dependencies', () => {
@@ -118,7 +118,7 @@ describe('Job', () => {
       dependencies: ['build']
     });
 
-    expect(job.props.dependencies).toEqual(['build']);
+    expect(job.dependencies).toEqual(['build']);
   });
 
   it('should create a job with when condition', () => {
@@ -127,7 +127,7 @@ describe('Job', () => {
       when: 'manual'
     });
 
-    expect(job.props.when).toBe('manual');
+    expect(job.when).toBe('manual');
   });
 
   it('should create a job with allow_failure', () => {
@@ -136,7 +136,7 @@ describe('Job', () => {
       allow_failure: true
     });
 
-    expect(job.props.allow_failure).toBe(true);
+    expect(job.allow_failure).toBe(true);
   });
 
   it('should create a job with timeout', () => {
@@ -145,7 +145,7 @@ describe('Job', () => {
       timeout: '30m'
     });
 
-    expect(job.props.timeout).toBe('30m');
+    expect(job.timeout).toBe('30m');
   });
 
   it('should create a job with retry', () => {
@@ -154,7 +154,7 @@ describe('Job', () => {
       retry: 2
     });
 
-    expect(job.props.retry).toBe(2);
+    expect(job.retry).toBe(2);
   });
 
   it('should create a job with parallel', () => {
@@ -163,7 +163,7 @@ describe('Job', () => {
       parallel: 3
     });
 
-    expect(job.props.parallel).toBe(3);
+    expect(job.parallel).toBe(3);
   });
 
   it('should create a job with environment', () => {
@@ -172,7 +172,7 @@ describe('Job', () => {
       environment: 'production'
     });
 
-    expect(job.props.environment).toBe('production');
+    expect(job.environment).toBe('production');
   });
 
   it('should create a job with coverage', () => {
@@ -181,15 +181,15 @@ describe('Job', () => {
       coverage: '/Coverage: \\d+\\.\\d+/'
     });
 
-    expect(job.props.coverage).toBe('/Coverage: \\d+\\.\\d+/');
+    expect(job.coverage).toBe('/Coverage: \\d+\\.\\d+/');
   });
 
-  it('should store props as readonly', () => {
+  it('should assign properties directly to instance', () => {
     const job = new Job({
       script: ['npm test']
     });
 
-    expect(job.props).toBeDefined();
-    expect(job.props.script).toEqual(['npm test']);
+    expect(job.script).toBeDefined();
+    expect(job.script).toEqual(['npm test']);
   });
 });

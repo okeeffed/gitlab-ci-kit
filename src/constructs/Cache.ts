@@ -5,9 +5,10 @@ import type { CacheItem } from "#schema/index.ts";
  * This is a thin wrapper around the generated CacheItem type.
  */
 export class Cache {
-  readonly props: CacheItem
-  constructor(props: CacheItem) {
-    this.props = props
-  }
 
+  constructor(props: CacheItem) {
+    Object.assign(this, props)
+  }
 }
+
+export interface Cache extends CacheItem { }

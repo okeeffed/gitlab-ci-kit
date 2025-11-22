@@ -11,40 +11,40 @@
 export type Services = (
   | string
   | {
+    /**
+     * Full name of the image that should be used. It should contain the Registry part if needed.
+     */
+    name: string;
+    /**
+     * @minItems 1
+     */
+    entrypoint?: [string, ...string[]];
+    docker?: {
       /**
-       * Full name of the image that should be used. It should contain the Registry part if needed.
+       * Image architecture to pull.
        */
-      name: string;
+      platform?: string;
       /**
-       * @minItems 1
+       * Username or UID to use for the container.
        */
-      entrypoint?: [string, ...string[]];
-      docker?: {
-        /**
-         * Image architecture to pull.
-         */
-        platform?: string;
-        /**
-         * Username or UID to use for the container.
-         */
-        user?: string;
-      };
-      kubernetes?: {
-        /**
-         * Username or UID to use for the container. It also supports the UID:GID format.
-         */
-        user?: string | number;
-      };
-      pull_policy?:
-        | ("always" | "never" | "if-not-present")
-        | [
-            "always" | "never" | "if-not-present",
-            ...("always" | "never" | "if-not-present")[],
-          ];
-      command?: string | [string | string[], ...(string | string[])[]];
-      alias?: string;
-      variables?: JobVariables;
-    }
+      user?: string;
+    };
+    kubernetes?: {
+      /**
+       * Username or UID to use for the container. It also supports the UID:GID format.
+       */
+      user?: string | number;
+    };
+    pull_policy?:
+    | ("always" | "never" | "if-not-present")
+    | [
+      "always" | "never" | "if-not-present",
+      ...("always" | "never" | "if-not-present")[],
+    ];
+    command?: string | [string | string[], ...(string | string[])[]];
+    alias?: string;
+    variables?: JobVariables;
+  }
 )[];
 export type Reference = string[];
 export type Artifacts = {
@@ -263,48 +263,48 @@ export type Cache = CacheItem | CacheItem[];
 export type Image =
   | string
   | {
+    /**
+     * Full name of the image that should be used. It should contain the Registry part if needed.
+     */
+    name: string;
+    /**
+     * Command or script that should be executed as the container's entrypoint. It will be translated to Docker's --entrypoint option while creating the container. The syntax is similar to Dockerfile's ENTRYPOINT directive, where each shell token is a separate string in the array.
+     *
+     * @minItems 1
+     */
+    entrypoint?: [unknown, ...unknown[]];
+    docker?: {
       /**
-       * Full name of the image that should be used. It should contain the Registry part if needed.
+       * Image architecture to pull.
        */
-      name: string;
+      platform?: string;
       /**
-       * Command or script that should be executed as the container's entrypoint. It will be translated to Docker's --entrypoint option while creating the container. The syntax is similar to Dockerfile's ENTRYPOINT directive, where each shell token is a separate string in the array.
-       *
-       * @minItems 1
+       * Username or UID to use for the container.
        */
-      entrypoint?: [unknown, ...unknown[]];
-      docker?: {
-        /**
-         * Image architecture to pull.
-         */
-        platform?: string;
-        /**
-         * Username or UID to use for the container.
-         */
-        user?: string;
-      };
-      kubernetes?: {
-        /**
-         * Username or UID to use for the container. It also supports the UID:GID format.
-         */
-        user?: string | number;
-      };
-      pull_policy?:
-        | ("always" | "never" | "if-not-present")
-        | [
-            "always" | "never" | "if-not-present",
-            ...("always" | "never" | "if-not-present")[],
-          ];
+      user?: string;
     };
+    kubernetes?: {
+      /**
+       * Username or UID to use for the container. It also supports the UID:GID format.
+       */
+      user?: string | number;
+    };
+    pull_policy?:
+    | ("always" | "never" | "if-not-present")
+    | [
+      "always" | "never" | "if-not-present",
+      ...("always" | "never" | "if-not-present")[],
+    ];
+  };
 export type Interruptible = boolean;
 export type Identity = "google_cloud";
 export type Retry =
   | RetryMax
   | {
-      max?: RetryMax;
-      when?: RetryErrors | RetryErrors[];
-      exit_codes?: [number, ...number[]] | number;
-    };
+    max?: RetryMax;
+    when?: RetryErrors | RetryErrors[];
+    exit_codes?: [number, ...number[]] | number;
+  };
 /**
  * The number of times the job will be retried if it fails. Defaults to 0 and can max be retried 2 times (3 times total).
  */
@@ -327,40 +327,40 @@ export type RetryErrors =
 export type Services1 = (
   | string
   | {
+    /**
+     * Full name of the image that should be used. It should contain the Registry part if needed.
+     */
+    name: string;
+    /**
+     * @minItems 1
+     */
+    entrypoint?: [string, ...string[]];
+    docker?: {
       /**
-       * Full name of the image that should be used. It should contain the Registry part if needed.
+       * Image architecture to pull.
        */
-      name: string;
+      platform?: string;
       /**
-       * @minItems 1
+       * Username or UID to use for the container.
        */
-      entrypoint?: [string, ...string[]];
-      docker?: {
-        /**
-         * Image architecture to pull.
-         */
-        platform?: string;
-        /**
-         * Username or UID to use for the container.
-         */
-        user?: string;
-      };
-      kubernetes?: {
-        /**
-         * Username or UID to use for the container. It also supports the UID:GID format.
-         */
-        user?: string | number;
-      };
-      pull_policy?:
-        | ("always" | "never" | "if-not-present")
-        | [
-            "always" | "never" | "if-not-present",
-            ...("always" | "never" | "if-not-present")[],
-          ];
-      command?: string | [string | string[], ...(string | string[])[]];
-      alias?: string;
-      variables?: JobVariables;
-    }
+      user?: string;
+    };
+    kubernetes?: {
+      /**
+       * Username or UID to use for the container. It also supports the UID:GID format.
+       */
+      user?: string | number;
+    };
+    pull_policy?:
+    | ("always" | "never" | "if-not-present")
+    | [
+      "always" | "never" | "if-not-present",
+      ...("always" | "never" | "if-not-present")[],
+    ];
+    command?: string | [string | string[], ...(string | string[])[]];
+    alias?: string;
+    variables?: JobVariables;
+  }
 )[];
 /**
  * @minItems 1
@@ -372,109 +372,109 @@ export type Tags = [
 export type Timeout = string;
 export type IncludeItem =
   | ({
-      [k: string]: unknown;
-    } & string)
+    [k: string]: unknown;
+  } & string)
   | {
-      /**
-       * Relative path from local repository root (`/`) to the `yaml`/`yml` file template. The file must be on the same branch, and does not work across git submodules.
-       */
-      local: string;
-      rules?: IncludeRules;
-      inputs?: Inputs;
-    }
+    /**
+     * Relative path from local repository root (`/`) to the `yaml`/`yml` file template. The file must be on the same branch, and does not work across git submodules.
+     */
+    local: string;
+    rules?: IncludeRules;
+    inputs?: Inputs;
+  }
   | {
-      /**
-       * Path to the project, e.g. `group/project`, or `group/sub-group/project` [Learn more](https://docs.gitlab.com/ci/yaml/#includeproject).
-       */
-      project: string;
-      /**
-       * Branch/Tag/Commit-hash for the target project.
-       */
-      ref?: string;
-      file: string | string[];
-      rules?: IncludeRules;
-      inputs?: Inputs;
-    }
+    /**
+     * Path to the project, e.g. `group/project`, or `group/sub-group/project` [Learn more](https://docs.gitlab.com/ci/yaml/#includeproject).
+     */
+    project: string;
+    /**
+     * Branch/Tag/Commit-hash for the target project.
+     */
+    ref?: string;
+    file: string | string[];
+    rules?: IncludeRules;
+    inputs?: Inputs;
+  }
   | {
-      /**
-       * Use a `.gitlab-ci.yml` template as a base, e.g. `Nodejs.gitlab-ci.yml`.
-       */
-      template: string;
-      rules?: IncludeRules;
-      inputs?: Inputs;
-    }
+    /**
+     * Use a `.gitlab-ci.yml` template as a base, e.g. `Nodejs.gitlab-ci.yml`.
+     */
+    template: string;
+    rules?: IncludeRules;
+    inputs?: Inputs;
+  }
   | {
-      /**
-       * Local path to component directory or full path to external component directory.
-       */
-      component: string;
-      rules?: IncludeRules;
-      inputs?: Inputs;
-    }
+    /**
+     * Local path to component directory or full path to external component directory.
+     */
+    component: string;
+    rules?: IncludeRules;
+    inputs?: Inputs;
+  }
   | {
-      /**
-       * URL to a `yaml`/`yml` template file using HTTP/HTTPS.
-       */
-      remote: string;
-      /**
-       * SHA256 integrity hash of the remote file content.
-       */
-      integrity?: string;
-      rules?: IncludeRules;
-      inputs?: Inputs;
-    };
+    /**
+     * URL to a `yaml`/`yml` template file using HTTP/HTTPS.
+     */
+    remote: string;
+    /**
+     * SHA256 integrity hash of the remote file content.
+     */
+    integrity?: string;
+    rules?: IncludeRules;
+    inputs?: Inputs;
+  };
 export type IncludeRules =
   | (
-      | {
-          if?: If;
-          changes?: Changes;
-          exists?: Exists;
-          when?: ("never" | "always") | null;
-        }
-      | string
-      | [string, ...string[]]
-    )[]
+    | {
+      if?: If;
+      changes?: Changes;
+      exists?: Exists;
+      when?: ("never" | "always") | null;
+    }
+    | string
+    | [string, ...string[]]
+  )[]
   | null;
 export type If = string;
 export type Changes =
   | {
-      /**
-       * List of file paths.
-       */
-      paths: string[];
-      /**
-       * Ref for comparing changes.
-       */
-      compare_to?: string;
-    }
+    /**
+     * List of file paths.
+     */
+    paths: string[];
+    /**
+     * Ref for comparing changes.
+     */
+    compare_to?: string;
+  }
   | string[];
 export type Exists =
   | string[]
   | {
-      /**
-       * List of file paths.
-       */
-      paths: string[];
-      /**
-       * Path of the project to search in.
-       */
-      project?: string;
-    }
+    /**
+     * List of file paths.
+     */
+    paths: string[];
+    /**
+     * Path of the project to search in.
+     */
+    project?: string;
+  }
   | {
-      /**
-       * List of file paths.
-       */
-      paths: string[];
-      /**
-       * Path of the project to search in.
-       */
-      project: string;
-      /**
-       * Ref of the project to search in.
-       */
-      ref?: string;
-    };
-export type JobTemplate = {
+    /**
+     * List of file paths.
+     */
+    paths: string[];
+    /**
+     * Path of the project to search in.
+     */
+    project: string;
+    /**
+     * Ref of the project to search in.
+     */
+    ref?: string;
+  };
+export type IJob = {
   image?: Image;
   services?: Services1;
   before_script?: string | (string | string[])[];
@@ -497,20 +497,20 @@ export type JobTemplate = {
    * Job will run *only* when these filtering options match.
    */
   only?:
-    | null
-    | FilterRefs
-    | {
-        refs?: FilterRefs;
-        /**
-         * Filter job based on if Kubernetes integration is active.
-         */
-        kubernetes?: "active";
-        variables?: string[];
-        /**
-         * Filter job creation based on files that were modified in a git push.
-         */
-        changes?: string[];
-      };
+  | null
+  | FilterRefs
+  | {
+    refs?: FilterRefs;
+    /**
+     * Filter job based on if Kubernetes integration is active.
+     */
+    kubernetes?: "active";
+    variables?: string[];
+    /**
+     * Filter job creation based on files that were modified in a git push.
+     */
+    changes?: string[];
+  };
   /**
    * The name of one or more jobs to inherit configuration from.
    */
@@ -521,44 +521,44 @@ export type JobTemplate = {
   needs?: (
     | string
     | {
-        job: string;
-        artifacts?: boolean;
-        optional?: boolean;
-        parallel?: ParallelMatrix;
-      }
+      job: string;
+      artifacts?: boolean;
+      optional?: boolean;
+      parallel?: ParallelMatrix;
+    }
     | {
-        pipeline: string;
-        job: string;
-        artifacts?: boolean;
-        parallel?: ParallelMatrix;
-      }
+      pipeline: string;
+      job: string;
+      artifacts?: boolean;
+      parallel?: ParallelMatrix;
+    }
     | {
-        job: string;
-        project: string;
-        ref: string;
-        artifacts?: boolean;
-        parallel?: ParallelMatrix;
-      }
+      job: string;
+      project: string;
+      ref: string;
+      artifacts?: boolean;
+      parallel?: ParallelMatrix;
+    }
     | Reference
   )[];
   /**
    * Job will run *except* for when these filtering options match.
    */
   except?:
-    | null
-    | FilterRefs
-    | {
-        refs?: FilterRefs;
-        /**
-         * Filter job based on if Kubernetes integration is active.
-         */
-        kubernetes?: "active";
-        variables?: string[];
-        /**
-         * Filter job creation based on files that were modified in a git push.
-         */
-        changes?: string[];
-      };
+  | null
+  | FilterRefs
+  | {
+    refs?: FilterRefs;
+    /**
+     * Filter job based on if Kubernetes integration is active.
+     */
+    kubernetes?: "active";
+    variables?: string[];
+    /**
+     * Filter job creation based on files that were modified in a git push.
+     */
+    changes?: string[];
+  };
   tags?: Tags;
   allow_failure?: AllowFailure;
   timeout?: Timeout;
@@ -574,75 +574,75 @@ export type JobTemplate = {
    * Used to associate environment metadata with a deploy. Environment can have a name and URL attached to it, and will be displayed under /environments under the project.
    */
   environment?:
-    | string
-    | {
+  | string
+  | {
+    /**
+     * The name of the environment, e.g. 'qa', 'staging', 'production'.
+     */
+    name: string;
+    /**
+     * When set, this will expose buttons in various places for the current environment in GitLab, that will take you to the defined URL.
+     */
+    url?: string;
+    /**
+     * The name of a job to execute when the environment is about to be stopped.
+     */
+    on_stop?: string;
+    /**
+     * Specifies what this job will do. 'start' (default) indicates the job will start the deployment. 'prepare'/'verify'/'access' indicates this will not affect the deployment. 'stop' indicates this will stop the deployment.
+     */
+    action?: "start" | "prepare" | "stop" | "verify" | "access";
+    /**
+     * The amount of time it should take before GitLab will automatically stop the environment. Supports a wide variety of formats, e.g. '1 week', '3 mins 4 sec', '2 hrs 20 min', '2h20min', '6 mos 1 day', '47 yrs 6 mos and 4d', '3 weeks and 2 days'.
+     */
+    auto_stop_in?: string;
+    /**
+     * Used to configure the kubernetes deployment for this environment. This is currently not supported for kubernetes clusters that are managed by GitLab.
+     */
+    kubernetes?: {
+      /**
+       * Specifies the GitLab Agent for Kubernetes. The format is `path/to/agent/project:agent-name`.
+       */
+      agent?: string;
+      /**
+       * Deprecated. Use `dashboard.namespace` instead. The kubernetes namespace where this environment's dashboard should be deployed to.
+       */
+      namespace?: string;
+      /**
+       * Deprecated. Use `dashboard.flux_resource_path` instead. The Flux resource path to associate with this environment. This must be the full resource path. For example, 'helm.toolkit.fluxcd.io/v2/namespaces/gitlab-agent/helmreleases/gitlab-agent'.
+       */
+      flux_resource_path?: string;
+      /**
+       * Used to configure the managed resources for this environment.
+       */
+      managed_resources?: {
         /**
-         * The name of the environment, e.g. 'qa', 'staging', 'production'.
+         * Indicates whether the managed resources are enabled for this environment.
          */
-        name: string;
-        /**
-         * When set, this will expose buttons in various places for the current environment in GitLab, that will take you to the defined URL.
-         */
-        url?: string;
-        /**
-         * The name of a job to execute when the environment is about to be stopped.
-         */
-        on_stop?: string;
-        /**
-         * Specifies what this job will do. 'start' (default) indicates the job will start the deployment. 'prepare'/'verify'/'access' indicates this will not affect the deployment. 'stop' indicates this will stop the deployment.
-         */
-        action?: "start" | "prepare" | "stop" | "verify" | "access";
-        /**
-         * The amount of time it should take before GitLab will automatically stop the environment. Supports a wide variety of formats, e.g. '1 week', '3 mins 4 sec', '2 hrs 20 min', '2h20min', '6 mos 1 day', '47 yrs 6 mos and 4d', '3 weeks and 2 days'.
-         */
-        auto_stop_in?: string;
-        /**
-         * Used to configure the kubernetes deployment for this environment. This is currently not supported for kubernetes clusters that are managed by GitLab.
-         */
-        kubernetes?: {
-          /**
-           * Specifies the GitLab Agent for Kubernetes. The format is `path/to/agent/project:agent-name`.
-           */
-          agent?: string;
-          /**
-           * Deprecated. Use `dashboard.namespace` instead. The kubernetes namespace where this environment's dashboard should be deployed to.
-           */
-          namespace?: string;
-          /**
-           * Deprecated. Use `dashboard.flux_resource_path` instead. The Flux resource path to associate with this environment. This must be the full resource path. For example, 'helm.toolkit.fluxcd.io/v2/namespaces/gitlab-agent/helmreleases/gitlab-agent'.
-           */
-          flux_resource_path?: string;
-          /**
-           * Used to configure the managed resources for this environment.
-           */
-          managed_resources?: {
-            /**
-             * Indicates whether the managed resources are enabled for this environment.
-             */
-            enabled?: boolean;
-            [k: string]: unknown;
-          };
-          /**
-           * Used to configure the dashboard for this environment.
-           */
-          dashboard?: {
-            /**
-             * The kubernetes namespace where the dashboard for this environment should be deployed to.
-             */
-            namespace?: string;
-            /**
-             * The Flux resource path to associate with this environment. This must be the full resource path. For example, 'helm.toolkit.fluxcd.io/v2/namespaces/gitlab-agent/helmreleases/gitlab-agent'.
-             */
-            flux_resource_path?: string;
-            [k: string]: unknown;
-          };
-          [k: string]: unknown;
-        };
-        /**
-         * Explicitly specifies the tier of the deployment environment if non-standard environment name is used.
-         */
-        deployment_tier?: string;
+        enabled?: boolean;
+        [k: string]: unknown;
       };
+      /**
+       * Used to configure the dashboard for this environment.
+       */
+      dashboard?: {
+        /**
+         * The kubernetes namespace where the dashboard for this environment should be deployed to.
+         */
+        namespace?: string;
+        /**
+         * The Flux resource path to associate with this environment. This must be the full resource path. For example, 'helm.toolkit.fluxcd.io/v2/namespaces/gitlab-agent/helmreleases/gitlab-agent'.
+         */
+        flux_resource_path?: string;
+        [k: string]: unknown;
+      };
+      [k: string]: unknown;
+    };
+    /**
+     * Explicitly specifies the tier of the deployment environment if non-standard environment name is used.
+     */
+    deployment_tier?: string;
+  };
   /**
    * Indicates that the job creates a Release.
    */
@@ -733,412 +733,412 @@ export type JobTemplate = {
    */
   resource_group?: string;
   trigger?:
-    | {
+  | {
+    /**
+     * Path to the project, e.g. `group/project`, or `group/sub-group/project`.
+     */
+    project: string;
+    /**
+     * The branch name that a downstream pipeline will use
+     */
+    branch?: string;
+    /**
+     * You can mirror or depend on the pipeline status from the triggered pipeline to the source bridge job by using strategy: `depend` or `mirror`
+     */
+    strategy?: "depend" | "mirror";
+    inputs?: Inputs;
+    /**
+     * Specify what to forward to the downstream pipeline.
+     */
+    forward?: {
+      /**
+       * Variables defined in the trigger job are passed to downstream pipelines.
+       */
+      yaml_variables?: boolean;
+      /**
+       * Variables added for manual pipeline runs and scheduled pipelines are passed to downstream pipelines.
+       */
+      pipeline_variables?: boolean;
+    };
+  }
+  | {
+    include?:
+    | string
+    | []
+    | [
+      | {
         /**
-         * Path to the project, e.g. `group/project`, or `group/sub-group/project`.
+         * Relative path from local repository root (`/`) to the local YAML file to define the pipeline configuration.
+         */
+        local: string;
+        inputs?: Inputs;
+      }
+      | {
+        /**
+         * Name of the template YAML file to use in the pipeline configuration.
+         */
+        template: string;
+        inputs?: Inputs;
+      }
+      | {
+        /**
+         * Relative path to the generated YAML file which is extracted from the artifacts and used as the configuration for triggering the child pipeline.
+         */
+        artifact: string;
+        /**
+         * Job name which generates the artifact
+         */
+        job: string;
+        inputs?: Inputs;
+      }
+      | {
+        /**
+         * Path to another private project under the same GitLab instance, like `group/project` or `group/sub-group/project`.
          */
         project: string;
         /**
-         * The branch name that a downstream pipeline will use
+         * Branch/Tag/Commit hash for the target project.
          */
-        branch?: string;
+        ref?: string;
         /**
-         * You can mirror or depend on the pipeline status from the triggered pipeline to the source bridge job by using strategy: `depend` or `mirror`
+         * Relative path from repository root (`/`) to the pipeline configuration YAML file.
          */
-        strategy?: "depend" | "mirror";
+        file: string;
         inputs?: Inputs;
-        /**
-         * Specify what to forward to the downstream pipeline.
-         */
-        forward?: {
-          /**
-           * Variables defined in the trigger job are passed to downstream pipelines.
-           */
-          yaml_variables?: boolean;
-          /**
-           * Variables added for manual pipeline runs and scheduled pipelines are passed to downstream pipelines.
-           */
-          pipeline_variables?: boolean;
-        };
       }
-    | {
-        include?:
-          | string
-          | []
-          | [
-              | {
-                  /**
-                   * Relative path from local repository root (`/`) to the local YAML file to define the pipeline configuration.
-                   */
-                  local: string;
-                  inputs?: Inputs;
-                }
-              | {
-                  /**
-                   * Name of the template YAML file to use in the pipeline configuration.
-                   */
-                  template: string;
-                  inputs?: Inputs;
-                }
-              | {
-                  /**
-                   * Relative path to the generated YAML file which is extracted from the artifacts and used as the configuration for triggering the child pipeline.
-                   */
-                  artifact: string;
-                  /**
-                   * Job name which generates the artifact
-                   */
-                  job: string;
-                  inputs?: Inputs;
-                }
-              | {
-                  /**
-                   * Path to another private project under the same GitLab instance, like `group/project` or `group/sub-group/project`.
-                   */
-                  project: string;
-                  /**
-                   * Branch/Tag/Commit hash for the target project.
-                   */
-                  ref?: string;
-                  /**
-                   * Relative path from repository root (`/`) to the pipeline configuration YAML file.
-                   */
-                  file: string;
-                  inputs?: Inputs;
-                }
-              | {
-                  /**
-                   * Local path to component directory or full path to external component directory.
-                   */
-                  component: string;
-                  inputs?: Inputs;
-                }
-              | {
-                  /**
-                   * URL to a `yaml`/`yml` template file using HTTP/HTTPS.
-                   */
-                  remote: string;
-                  inputs?: Inputs;
-                },
-            ]
-          | [
-              (
-                | {
-                    /**
-                     * Relative path from local repository root (`/`) to the local YAML file to define the pipeline configuration.
-                     */
-                    local: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * Name of the template YAML file to use in the pipeline configuration.
-                     */
-                    template: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * Relative path to the generated YAML file which is extracted from the artifacts and used as the configuration for triggering the child pipeline.
-                     */
-                    artifact: string;
-                    /**
-                     * Job name which generates the artifact
-                     */
-                    job: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * Path to another private project under the same GitLab instance, like `group/project` or `group/sub-group/project`.
-                     */
-                    project: string;
-                    /**
-                     * Branch/Tag/Commit hash for the target project.
-                     */
-                    ref?: string;
-                    /**
-                     * Relative path from repository root (`/`) to the pipeline configuration YAML file.
-                     */
-                    file: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * Local path to component directory or full path to external component directory.
-                     */
-                    component: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * URL to a `yaml`/`yml` template file using HTTP/HTTPS.
-                     */
-                    remote: string;
-                    inputs?: Inputs;
-                  }
-              ),
-              (
-                | {
-                    /**
-                     * Relative path from local repository root (`/`) to the local YAML file to define the pipeline configuration.
-                     */
-                    local: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * Name of the template YAML file to use in the pipeline configuration.
-                     */
-                    template: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * Relative path to the generated YAML file which is extracted from the artifacts and used as the configuration for triggering the child pipeline.
-                     */
-                    artifact: string;
-                    /**
-                     * Job name which generates the artifact
-                     */
-                    job: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * Path to another private project under the same GitLab instance, like `group/project` or `group/sub-group/project`.
-                     */
-                    project: string;
-                    /**
-                     * Branch/Tag/Commit hash for the target project.
-                     */
-                    ref?: string;
-                    /**
-                     * Relative path from repository root (`/`) to the pipeline configuration YAML file.
-                     */
-                    file: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * Local path to component directory or full path to external component directory.
-                     */
-                    component: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * URL to a `yaml`/`yml` template file using HTTP/HTTPS.
-                     */
-                    remote: string;
-                    inputs?: Inputs;
-                  }
-              ),
-            ]
-          | [
-              (
-                | {
-                    /**
-                     * Relative path from local repository root (`/`) to the local YAML file to define the pipeline configuration.
-                     */
-                    local: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * Name of the template YAML file to use in the pipeline configuration.
-                     */
-                    template: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * Relative path to the generated YAML file which is extracted from the artifacts and used as the configuration for triggering the child pipeline.
-                     */
-                    artifact: string;
-                    /**
-                     * Job name which generates the artifact
-                     */
-                    job: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * Path to another private project under the same GitLab instance, like `group/project` or `group/sub-group/project`.
-                     */
-                    project: string;
-                    /**
-                     * Branch/Tag/Commit hash for the target project.
-                     */
-                    ref?: string;
-                    /**
-                     * Relative path from repository root (`/`) to the pipeline configuration YAML file.
-                     */
-                    file: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * Local path to component directory or full path to external component directory.
-                     */
-                    component: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * URL to a `yaml`/`yml` template file using HTTP/HTTPS.
-                     */
-                    remote: string;
-                    inputs?: Inputs;
-                  }
-              ),
-              (
-                | {
-                    /**
-                     * Relative path from local repository root (`/`) to the local YAML file to define the pipeline configuration.
-                     */
-                    local: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * Name of the template YAML file to use in the pipeline configuration.
-                     */
-                    template: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * Relative path to the generated YAML file which is extracted from the artifacts and used as the configuration for triggering the child pipeline.
-                     */
-                    artifact: string;
-                    /**
-                     * Job name which generates the artifact
-                     */
-                    job: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * Path to another private project under the same GitLab instance, like `group/project` or `group/sub-group/project`.
-                     */
-                    project: string;
-                    /**
-                     * Branch/Tag/Commit hash for the target project.
-                     */
-                    ref?: string;
-                    /**
-                     * Relative path from repository root (`/`) to the pipeline configuration YAML file.
-                     */
-                    file: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * Local path to component directory or full path to external component directory.
-                     */
-                    component: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * URL to a `yaml`/`yml` template file using HTTP/HTTPS.
-                     */
-                    remote: string;
-                    inputs?: Inputs;
-                  }
-              ),
-              (
-                | {
-                    /**
-                     * Relative path from local repository root (`/`) to the local YAML file to define the pipeline configuration.
-                     */
-                    local: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * Name of the template YAML file to use in the pipeline configuration.
-                     */
-                    template: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * Relative path to the generated YAML file which is extracted from the artifacts and used as the configuration for triggering the child pipeline.
-                     */
-                    artifact: string;
-                    /**
-                     * Job name which generates the artifact
-                     */
-                    job: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * Path to another private project under the same GitLab instance, like `group/project` or `group/sub-group/project`.
-                     */
-                    project: string;
-                    /**
-                     * Branch/Tag/Commit hash for the target project.
-                     */
-                    ref?: string;
-                    /**
-                     * Relative path from repository root (`/`) to the pipeline configuration YAML file.
-                     */
-                    file: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * Local path to component directory or full path to external component directory.
-                     */
-                    component: string;
-                    inputs?: Inputs;
-                  }
-                | {
-                    /**
-                     * URL to a `yaml`/`yml` template file using HTTP/HTTPS.
-                     */
-                    remote: string;
-                    inputs?: Inputs;
-                  }
-              ),
-            ];
+      | {
         /**
-         * You can mirror or depend on the pipeline status from the triggered pipeline to the source bridge job by using strategy: `depend` or `mirror`
+         * Local path to component directory or full path to external component directory.
          */
-        strategy?: "depend" | "mirror";
-        /**
-         * Specify what to forward to the downstream pipeline.
-         */
-        forward?: {
-          /**
-           * Variables defined in the trigger job are passed to downstream pipelines.
-           */
-          yaml_variables?: boolean;
-          /**
-           * Variables added for manual pipeline runs and scheduled pipelines are passed to downstream pipelines.
-           */
-          pipeline_variables?: boolean;
-        };
+        component: string;
+        inputs?: Inputs;
       }
-    | string;
+      | {
+        /**
+         * URL to a `yaml`/`yml` template file using HTTP/HTTPS.
+         */
+        remote: string;
+        inputs?: Inputs;
+      },
+    ]
+    | [
+      (
+        | {
+          /**
+           * Relative path from local repository root (`/`) to the local YAML file to define the pipeline configuration.
+           */
+          local: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * Name of the template YAML file to use in the pipeline configuration.
+           */
+          template: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * Relative path to the generated YAML file which is extracted from the artifacts and used as the configuration for triggering the child pipeline.
+           */
+          artifact: string;
+          /**
+           * Job name which generates the artifact
+           */
+          job: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * Path to another private project under the same GitLab instance, like `group/project` or `group/sub-group/project`.
+           */
+          project: string;
+          /**
+           * Branch/Tag/Commit hash for the target project.
+           */
+          ref?: string;
+          /**
+           * Relative path from repository root (`/`) to the pipeline configuration YAML file.
+           */
+          file: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * Local path to component directory or full path to external component directory.
+           */
+          component: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * URL to a `yaml`/`yml` template file using HTTP/HTTPS.
+           */
+          remote: string;
+          inputs?: Inputs;
+        }
+      ),
+      (
+        | {
+          /**
+           * Relative path from local repository root (`/`) to the local YAML file to define the pipeline configuration.
+           */
+          local: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * Name of the template YAML file to use in the pipeline configuration.
+           */
+          template: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * Relative path to the generated YAML file which is extracted from the artifacts and used as the configuration for triggering the child pipeline.
+           */
+          artifact: string;
+          /**
+           * Job name which generates the artifact
+           */
+          job: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * Path to another private project under the same GitLab instance, like `group/project` or `group/sub-group/project`.
+           */
+          project: string;
+          /**
+           * Branch/Tag/Commit hash for the target project.
+           */
+          ref?: string;
+          /**
+           * Relative path from repository root (`/`) to the pipeline configuration YAML file.
+           */
+          file: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * Local path to component directory or full path to external component directory.
+           */
+          component: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * URL to a `yaml`/`yml` template file using HTTP/HTTPS.
+           */
+          remote: string;
+          inputs?: Inputs;
+        }
+      ),
+    ]
+    | [
+      (
+        | {
+          /**
+           * Relative path from local repository root (`/`) to the local YAML file to define the pipeline configuration.
+           */
+          local: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * Name of the template YAML file to use in the pipeline configuration.
+           */
+          template: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * Relative path to the generated YAML file which is extracted from the artifacts and used as the configuration for triggering the child pipeline.
+           */
+          artifact: string;
+          /**
+           * Job name which generates the artifact
+           */
+          job: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * Path to another private project under the same GitLab instance, like `group/project` or `group/sub-group/project`.
+           */
+          project: string;
+          /**
+           * Branch/Tag/Commit hash for the target project.
+           */
+          ref?: string;
+          /**
+           * Relative path from repository root (`/`) to the pipeline configuration YAML file.
+           */
+          file: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * Local path to component directory or full path to external component directory.
+           */
+          component: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * URL to a `yaml`/`yml` template file using HTTP/HTTPS.
+           */
+          remote: string;
+          inputs?: Inputs;
+        }
+      ),
+      (
+        | {
+          /**
+           * Relative path from local repository root (`/`) to the local YAML file to define the pipeline configuration.
+           */
+          local: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * Name of the template YAML file to use in the pipeline configuration.
+           */
+          template: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * Relative path to the generated YAML file which is extracted from the artifacts and used as the configuration for triggering the child pipeline.
+           */
+          artifact: string;
+          /**
+           * Job name which generates the artifact
+           */
+          job: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * Path to another private project under the same GitLab instance, like `group/project` or `group/sub-group/project`.
+           */
+          project: string;
+          /**
+           * Branch/Tag/Commit hash for the target project.
+           */
+          ref?: string;
+          /**
+           * Relative path from repository root (`/`) to the pipeline configuration YAML file.
+           */
+          file: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * Local path to component directory or full path to external component directory.
+           */
+          component: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * URL to a `yaml`/`yml` template file using HTTP/HTTPS.
+           */
+          remote: string;
+          inputs?: Inputs;
+        }
+      ),
+      (
+        | {
+          /**
+           * Relative path from local repository root (`/`) to the local YAML file to define the pipeline configuration.
+           */
+          local: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * Name of the template YAML file to use in the pipeline configuration.
+           */
+          template: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * Relative path to the generated YAML file which is extracted from the artifacts and used as the configuration for triggering the child pipeline.
+           */
+          artifact: string;
+          /**
+           * Job name which generates the artifact
+           */
+          job: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * Path to another private project under the same GitLab instance, like `group/project` or `group/sub-group/project`.
+           */
+          project: string;
+          /**
+           * Branch/Tag/Commit hash for the target project.
+           */
+          ref?: string;
+          /**
+           * Relative path from repository root (`/`) to the pipeline configuration YAML file.
+           */
+          file: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * Local path to component directory or full path to external component directory.
+           */
+          component: string;
+          inputs?: Inputs;
+        }
+        | {
+          /**
+           * URL to a `yaml`/`yml` template file using HTTP/HTTPS.
+           */
+          remote: string;
+          inputs?: Inputs;
+        }
+      ),
+    ];
+    /**
+     * You can mirror or depend on the pipeline status from the triggered pipeline to the source bridge job by using strategy: `depend` or `mirror`
+     */
+    strategy?: "depend" | "mirror";
+    /**
+     * Specify what to forward to the downstream pipeline.
+     */
+    forward?: {
+      /**
+       * Variables defined in the trigger job are passed to downstream pipelines.
+       */
+      yaml_variables?: boolean;
+      /**
+       * Variables added for manual pipeline runs and scheduled pipelines are passed to downstream pipelines.
+       */
+      pipeline_variables?: boolean;
+    };
+  }
+  | string;
   inherit?: {
     default?:
-      | boolean
-      | (
-          | "after_script"
-          | "artifacts"
-          | "before_script"
-          | "cache"
-          | "image"
-          | "interruptible"
-          | "retry"
-          | "services"
-          | "tags"
-          | "timeout"
-        )[];
+    | boolean
+    | (
+      | "after_script"
+      | "artifacts"
+      | "before_script"
+      | "cache"
+      | "image"
+      | "interruptible"
+      | "retry"
+      | "services"
+      | "tags"
+      | "timeout"
+    )[];
     variables?: boolean | string[];
   };
   /**
@@ -1146,13 +1146,15 @@ export type JobTemplate = {
    */
   publish?: string;
   pages?:
-    | {
-        path_prefix?: string;
-        expire_in?: string;
-        publish?: string;
-      }
-    | boolean;
-} & JobTemplate1;
+  | {
+    path_prefix?: string;
+    expire_in?: string;
+    publish?: string;
+  }
+  | boolean;
+}
+
+type JobTemplate = IJob & JobTemplate1;
 export type Rule = {
   if?: If;
   changes?: Changes;
@@ -1176,62 +1178,62 @@ export type StartIn = string;
 export type AllowFailure =
   | boolean
   | {
-      exit_codes: number;
-    }
+    exit_codes: number;
+  }
   | {
-      /**
-       * @minItems 1
-       */
-      exit_codes: [number, ...number[]];
-    };
+    /**
+     * @minItems 1
+     */
+    exit_codes: [number, ...number[]];
+  };
 export type RulesNeeds = (
   | string
   | {
-      /**
-       * Name of a job that is defined in the pipeline.
-       */
-      job: string;
-      /**
-       * Download artifacts of the job in needs.
-       */
-      artifacts?: boolean;
-      /**
-       * Whether the job needs to be present in the pipeline to run ahead of the current job.
-       */
-      optional?: boolean;
-    }
+    /**
+     * Name of a job that is defined in the pipeline.
+     */
+    job: string;
+    /**
+     * Download artifacts of the job in needs.
+     */
+    artifacts?: boolean;
+    /**
+     * Whether the job needs to be present in the pipeline to run ahead of the current job.
+     */
+    optional?: boolean;
+  }
 )[];
 /**
  * Any of these step use cases are valid.
  */
 export type Step =
   | {
-      name: StepName;
-      env?: StepNamedStrings;
-      inputs?: StepNamedValues;
-      step: string | StepGitReference | StepOciReference;
-    }
+    name: StepName;
+    env?: StepNamedStrings;
+    inputs?: StepNamedValues;
+    step: string | StepGitReference | StepOciReference;
+  }
   | {
-      env?: StepNamedStrings;
-      run: Step[];
-      outputs?: StepNamedValues;
-      delegate?: string;
-    }
+    env?: StepNamedStrings;
+    run: Step[];
+    outputs?: StepNamedValues;
+    delegate?: string;
+  }
   | {
-      name: StepName;
-      env?: StepNamedStrings;
-      inputs?: StepNamedValues;
-      action: string;
-    }
+    name: StepName;
+    env?: StepNamedStrings;
+    inputs?: StepNamedValues;
+    action: string;
+  }
   | {
-      name: StepName;
-      env?: StepNamedStrings;
-      script: string;
-    }
+    name: StepName;
+    env?: StepNamedStrings;
+    script: string;
+  }
   | {
-      env?: StepNamedStrings;
-      exec: StepExec;
-    };
+    env?: StepNamedStrings;
+    exec: StepExec;
+  };
 export type StepName = string;
 export type Steps = Step[];
 /**
@@ -1239,16 +1241,16 @@ export type Steps = Step[];
  */
 export type FilterRefs = (
   | (
-      | "branches"
-      | "tags"
-      | "api"
-      | "external"
-      | "pipelines"
-      | "pushes"
-      | "schedules"
-      | "triggers"
-      | "web"
-    )
+    | "branches"
+    | "tags"
+    | "api"
+    | "external"
+    | "pipelines"
+    | "pushes"
+    | "schedules"
+    | "triggers"
+    | "web"
+  )
   | string
 )[];
 /**
@@ -1270,26 +1272,26 @@ export type ParallelMatrix = {
 export type Parallel =
   | number
   | {
-      /**
-       * Defines different variables for jobs that are running in parallel.
-       *
-       * @maxItems 200
-       */
-      matrix: {
-        [k: string]: string | number | unknown[];
-      }[];
-    };
+    /**
+     * Defines different variables for jobs that are running in parallel.
+     *
+     * @maxItems 200
+     */
+    matrix: {
+      [k: string]: string | number | unknown[];
+    }[];
+  };
 export type JobTemplate1 =
   | {
-      when: "delayed";
-      [k: string]: unknown;
-    }
+    when: "delayed";
+    [k: string]: unknown;
+  }
   | {
-      when?: {
-        [k: string]: unknown;
-      };
+    when?: {
       [k: string]: unknown;
     };
+    [k: string]: unknown;
+  };
 export type WorkflowName = string;
 export type Job = JobTemplate;
 
@@ -1299,41 +1301,41 @@ export interface HttpsGitlabComGitlabCiYml {
     inputs?: ConfigInputs;
   };
   image?:
-    | string
-    | {
-        /**
-         * Full name of the image that should be used. It should contain the Registry part if needed.
-         */
-        name: string;
-        /**
-         * Command or script that should be executed as the container's entrypoint. It will be translated to Docker's --entrypoint option while creating the container. The syntax is similar to Dockerfile's ENTRYPOINT directive, where each shell token is a separate string in the array.
-         *
-         * @minItems 1
-         */
-        entrypoint?: [unknown, ...unknown[]];
-        docker?: {
-          /**
-           * Image architecture to pull.
-           */
-          platform?: string;
-          /**
-           * Username or UID to use for the container.
-           */
-          user?: string;
-        };
-        kubernetes?: {
-          /**
-           * Username or UID to use for the container. It also supports the UID:GID format.
-           */
-          user?: string | number;
-        };
-        pull_policy?:
-          | ("always" | "never" | "if-not-present")
-          | [
-              "always" | "never" | "if-not-present",
-              ...("always" | "never" | "if-not-present")[],
-            ];
-      };
+  | string
+  | {
+    /**
+     * Full name of the image that should be used. It should contain the Registry part if needed.
+     */
+    name: string;
+    /**
+     * Command or script that should be executed as the container's entrypoint. It will be translated to Docker's --entrypoint option while creating the container. The syntax is similar to Dockerfile's ENTRYPOINT directive, where each shell token is a separate string in the array.
+     *
+     * @minItems 1
+     */
+    entrypoint?: [unknown, ...unknown[]];
+    docker?: {
+      /**
+       * Image architecture to pull.
+       */
+      platform?: string;
+      /**
+       * Username or UID to use for the container.
+       */
+      user?: string;
+    };
+    kubernetes?: {
+      /**
+       * Username or UID to use for the container. It also supports the UID:GID format.
+       */
+      user?: string | number;
+    };
+    pull_policy?:
+    | ("always" | "never" | "if-not-present")
+    | [
+      "always" | "never" | "if-not-present",
+      ...("always" | "never" | "if-not-present")[],
+    ];
+  };
   services?: Services;
   before_script?: string | (string | string[])[];
   after_script?: string | (string | string[])[];
@@ -1367,8 +1369,8 @@ export interface HttpsGitlabComGitlabCiYml {
     auto_cancel?: WorkflowAutoCancel;
     rules?: (
       | {
-          [k: string]: unknown;
-        }
+        [k: string]: unknown;
+      }
       | [string, ...string[]]
     )[];
     [k: string]: unknown;
@@ -1381,15 +1383,15 @@ export interface ConfigInputs {
    * via the `patternProperty` ".*".
    */
   [k: string]:
-    | (BaseInput & {
-        rules?: {
-          [k: string]: unknown;
-        }[];
-        [k: string]: unknown;
-      } & {
-        [k: string]: unknown;
-      })
-    | null;
+  | (BaseInput & {
+    rules?: {
+      [k: string]: unknown;
+    }[];
+    [k: string]: unknown;
+  } & {
+    [k: string]: unknown;
+  })
+  | null;
 }
 export interface BaseInput {
   type?: "array" | "boolean" | "number" | "string";
@@ -1409,11 +1411,11 @@ export interface JobVariables {
    * via the `patternProperty` ".*".
    */
   [k: string]:
-    | (boolean | number | string)
-    | {
-        value?: string;
-        expand?: boolean;
-      };
+  | (boolean | number | string)
+  | {
+    value?: string;
+    expand?: boolean;
+  };
 }
 export interface GlobalVariables {
   /**
@@ -1421,34 +1423,34 @@ export interface GlobalVariables {
    * via the `patternProperty` ".*".
    */
   [k: string]:
-    | (boolean | number | string)
-    | {
-        value?: string;
-        /**
-         * @minItems 1
-         */
-        options?: [string, ...string[]];
-        description?: string;
-        expand?: boolean;
-      };
+  | (boolean | number | string)
+  | {
+    value?: string;
+    /**
+     * @minItems 1
+     */
+    options?: [string, ...string[]];
+    description?: string;
+    expand?: boolean;
+  };
 }
 export interface CacheItem {
   key?:
-    | string
-    | {
-        /**
-         * @minItems 1
-         * @maxItems 2
-         */
-        files?: [string] | [string, string];
-        /**
-         * @minItems 1
-         * @maxItems 2
-         */
-        files_commits?: [string] | [string, string];
-        prefix?: string;
-        [k: string]: unknown;
-      };
+  | string
+  | {
+    /**
+     * @minItems 1
+     * @maxItems 2
+     */
+    files?: [string] | [string, string];
+    /**
+     * @minItems 1
+     * @maxItems 2
+     */
+    files_commits?: [string] | [string, string];
+    prefix?: string;
+    [k: string]: unknown;
+  };
   paths?: string[];
   policy?: string;
   unprotect?: boolean;
@@ -1458,12 +1460,12 @@ export interface CacheItem {
    * @maxItems 5
    */
   fallback_keys?:
-    | []
-    | [string]
-    | [string, string]
-    | [string, string, string]
-    | [string, string, string, string]
-    | [string, string, string, string, string];
+  | []
+  | [string]
+  | [string, string]
+  | [string, string, string]
+  | [string, string, string, string]
+  | [string, string, string, string, string];
   [k: string]: unknown;
 }
 export interface Hooks {
@@ -1486,24 +1488,24 @@ export interface Inputs {
    * via the `patternProperty` "^[a-zA-Z0-9_-]+$".
    */
   [k: string]:
+  | string
+  | number
+  | boolean
+  | (
     | string
     | number
     | boolean
-    | (
-        | string
-        | number
-        | boolean
-        | {
-            [k: string]: unknown;
-          }
-        | {
-            [k: string]: unknown;
-          }[]
-      )[]
     | {
-        [k: string]: unknown;
-      }
-    | null;
+      [k: string]: unknown;
+    }
+    | {
+      [k: string]: unknown;
+    }[]
+  )[]
+  | {
+    [k: string]: unknown;
+  }
+  | null;
 }
 export interface RulesVariables {
   /**
@@ -1521,11 +1523,11 @@ export interface JobVariables1 {
    * via the `patternProperty` ".*".
    */
   [k: string]:
-    | (boolean | number | string)
-    | {
-        value?: string;
-        expand?: boolean;
-      };
+  | (boolean | number | string)
+  | {
+    value?: string;
+    expand?: boolean;
+  };
 }
 export interface JobInputs {
   /**
@@ -1558,14 +1560,14 @@ export interface StepNamedValues {
    * via the `patternProperty` "^[a-zA-Z_][a-zA-Z0-9_]*$".
    */
   [k: string]:
-    | string
-    | number
-    | boolean
-    | null
-    | unknown[]
-    | {
-        [k: string]: unknown;
-      };
+  | string
+  | number
+  | boolean
+  | null
+  | unknown[]
+  | {
+    [k: string]: unknown;
+  };
 }
 /**
  * GitReference is a reference to a step in a Git repository.

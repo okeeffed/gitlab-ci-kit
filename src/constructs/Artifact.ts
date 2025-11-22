@@ -5,8 +5,9 @@ import type { Artifacts } from "#schema/index.ts";
  * This is a thin wrapper around the generated Artifacts type.
  */
 export class Artifact {
-  readonly props: Artifacts
   constructor(props: Artifacts) {
-    this.props = props
+    Object.assign(this, props)
   }
 }
+
+export interface Artifact extends Artifacts { }

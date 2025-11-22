@@ -5,9 +5,9 @@ import type { HttpsGitlabComGitlabCiYml } from "#schema/index.ts";
  * This is a thin wrapper around the generated default type.
  */
 export class Default {
-  readonly props: NonNullable<HttpsGitlabComGitlabCiYml["default"]>
-
   constructor(props: NonNullable<HttpsGitlabComGitlabCiYml["default"]>) {
-      this.props = props 
+    Object.assign(this, props)
   }
 }
+
+export interface Default extends NonNullable<HttpsGitlabComGitlabCiYml["default"]> { }

@@ -1,6 +1,6 @@
 {
   "name": "@okeeffed/gitlab-ci-kit",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "GitLab CI pipelines in TypeScript",
   "type": "module",
   "main": "./dist/index.js",

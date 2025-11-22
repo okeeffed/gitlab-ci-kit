@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { synth } from '../synth.js';
 import { Job } from '../../constructs/Job.js';
 import { Rule } from '../../constructs/Rule.js';

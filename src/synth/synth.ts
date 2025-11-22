@@ -1,7 +1,9 @@
 import { stringify } from "yaml";
-import type { Job } from "#constructs/Job.ts";
-import type { Rule } from "#constructs/Rule.ts";
-import type { Default } from "#constructs/Default.ts";
+import { Job } from "#constructs/Job.ts";
+import { Rule } from "#constructs/Rule.ts";
+import { Default } from "#constructs/Default.ts";
+import { Cache } from "#constructs/Cache.ts";
+import { Artifact } from "#constructs/Artifact.ts";
 
 /**
  * Configuration for the pipeline (top-level GitLab CI properties).
@@ -43,9 +45,14 @@ function unwrapConstruct(value: any): any {
     return value.map(unwrapConstruct);
   }
 
-  // Handle construct instances (Job, Rule, Cache, Artifact)
-  if (value.props !== undefined) {
-    return unwrapConstruct(value.props);
+  // Handle construct instances (Job, Rule, Cache, Artifact, Default)
+  if (value instanceof Job || value instanceof Rule || value instanceof Cache || value instanceof Artifact || value instanceof Default) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result: any = {};
+    for (const [key, val] of Object.entries(value)) {
+      result[key] = unwrapConstruct(val);
+    }
+    return result;
   }
 
   // Handle objects recursively
@@ -80,7 +87,7 @@ export function synth(jobs: Record<string, Job>, config?: PipelineConfig) {
 
   // Add jobs
   for (const [name, job] of Object.entries(jobs)) {
-    const unwrapped = unwrapConstruct(job.props);
+    const unwrapped = unwrapConstruct(job);
     pipeline[name] = unwrapped;
   }
 

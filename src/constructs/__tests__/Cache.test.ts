@@ -7,7 +7,7 @@ describe('Cache', () => {
       paths: ['node_modules/']
     });
 
-    expect(cache.props).toEqual({
+    expect(cache).toEqual({
       paths: ['node_modules/']
     });
   });
@@ -18,8 +18,8 @@ describe('Cache', () => {
       paths: ['node_modules/']
     });
 
-    expect(cache.props.key).toBe('my-cache-key');
-    expect(cache.props.paths).toEqual(['node_modules/']);
+    expect(cache.key).toBe('my-cache-key');
+    expect(cache.paths).toEqual(['node_modules/']);
   });
 
   it('should create a cache with key as object', () => {
@@ -30,7 +30,7 @@ describe('Cache', () => {
       paths: ['node_modules/']
     });
 
-    expect(cache.props.key).toEqual({
+    expect(cache.key).toEqual({
       files: ['package-lock.json']
     });
   });
@@ -44,7 +44,7 @@ describe('Cache', () => {
       paths: ['node_modules/']
     });
 
-    expect(cache.props.key).toEqual({
+    expect(cache.key).toEqual({
       prefix: 'npm',
       files: ['package-lock.json']
     });
@@ -56,7 +56,7 @@ describe('Cache', () => {
       policy: 'pull'
     });
 
-    expect(cache.props.policy).toBe('pull');
+    expect(cache.policy).toBe('pull');
   });
 
   it('should create a cache with untracked files', () => {
@@ -65,7 +65,7 @@ describe('Cache', () => {
       untracked: true
     });
 
-    expect(cache.props.untracked).toBe(true);
+    expect(cache.untracked).toBe(true);
   });
 
   it('should create a cache with when condition', () => {
@@ -74,7 +74,7 @@ describe('Cache', () => {
       when: 'on_success'
     });
 
-    expect(cache.props.when).toBe('on_success');
+    expect(cache.when).toBe('on_success');
   });
 
   it('should create a cache with unprotect setting', () => {
@@ -83,6 +83,6 @@ describe('Cache', () => {
       unprotect: true
     });
 
-    expect(cache.props.unprotect).toBe(true);
+    expect(cache.unprotect).toBe(true);
   });
 });

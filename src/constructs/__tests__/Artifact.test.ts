@@ -7,7 +7,7 @@ describe('Artifact', () => {
       paths: ['dist/', 'build/']
     });
 
-    expect(artifact.props).toEqual({
+    expect(artifact).toEqual({
       paths: ['dist/', 'build/']
     });
   });
@@ -18,8 +18,8 @@ describe('Artifact', () => {
       paths: ['coverage/']
     });
 
-    expect(artifact.props.name).toBe('my-artifacts');
-    expect(artifact.props.paths).toEqual(['coverage/']);
+    expect(artifact.name).toBe('my-artifacts');
+    expect(artifact.paths).toEqual(['coverage/']);
   });
 
   it('should create an artifact with expire_in', () => {
@@ -28,7 +28,7 @@ describe('Artifact', () => {
       expire_in: '1 week'
     });
 
-    expect(artifact.props.expire_in).toBe('1 week');
+    expect(artifact.expire_in).toBe('1 week');
   });
 
   it('should create an artifact with exclude patterns', () => {
@@ -37,7 +37,7 @@ describe('Artifact', () => {
       exclude: ['*.log', 'tmp/']
     });
 
-    expect(artifact.props.exclude).toEqual(['*.log', 'tmp/']);
+    expect(artifact.exclude).toEqual(['*.log', 'tmp/']);
   });
 
   it('should create an artifact with expose_as', () => {
@@ -46,7 +46,7 @@ describe('Artifact', () => {
       expose_as: 'Build artifacts'
     });
 
-    expect(artifact.props.expose_as).toBe('Build artifacts');
+    expect(artifact.expose_as).toBe('Build artifacts');
   });
 
   it('should create an artifact with when condition', () => {
@@ -55,7 +55,7 @@ describe('Artifact', () => {
       when: 'on_failure'
     });
 
-    expect(artifact.props.when).toBe('on_failure');
+    expect(artifact.when).toBe('on_failure');
   });
 
   it('should create an artifact with untracked files', () => {
@@ -64,24 +64,15 @@ describe('Artifact', () => {
       untracked: true
     });
 
-    expect(artifact.props.untracked).toBe(true);
+    expect(artifact.untracked).toBe(true);
   });
 
-  it('should create an artifact with public setting', () => {
-    const artifact = new Artifact({
-      paths: ['public/'],
-      public: false
-    });
-
-    expect(artifact.props.public).toBe(false);
-  });
-
-  it('should store props as readonly', () => {
+  it('should assign properties directly to instance', () => {
     const artifact = new Artifact({
       paths: ['dist/']
     });
 
-    expect(artifact.props).toBeDefined();
-    expect(artifact.props.paths).toEqual(['dist/']);
+    expect(artifact.paths).toBeDefined();
+    expect(artifact.paths).toEqual(['dist/']);
   });
 });
